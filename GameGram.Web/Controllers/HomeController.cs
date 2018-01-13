@@ -10,6 +10,7 @@ namespace GameGram.Web.Controllers
     {
         public ActionResult Index()
         {
+            GameGram.Domain.BLL.UsersBLL.GetAll();
             return View();
         }
 
