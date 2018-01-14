@@ -17,5 +17,11 @@ namespace GameGram.Domain.Infrastructure
         }
 
         public DbSet<Models.User> Users { get; set; }
+
+        public DbSet<Models.Post> Posts { get; set; }
+        public DbSet<Models.PostComment> PostComments { get; set; }
+        public DbSet<Models.PostHashtag> PostHashtags { get; set; }
+        public DbSet<Models.PostLike> PostLikes { get; set; }
+        public DbSet<Models.PostUserTag> PostUserTags { get; set; }
     }
 }

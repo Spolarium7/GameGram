@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameGram.Web.ViewModels.Home;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,11 @@ namespace GameGram.Web.Controllers
     {
         public ActionResult Index()
         {
-            GameGram.Domain.BLL.UsersBLL.GetAll();
-            return View();
+            PostsViewModel model = new PostsViewModel()
+            {
+                Posts = GameGram.Domain.BLL.PostBLL.Search(1, 5, "")
+            };
+            return View(model);
         }
 
         public ActionResult About()
