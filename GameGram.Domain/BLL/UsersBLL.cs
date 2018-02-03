@@ -18,13 +18,12 @@ namespace GameGram.Domain.BLL
             return db.Users.ToList();
         }
 
-        public static BLLOperation<User> RegisterByEmail(User model)
+        public static BLLOperation<User> Register(User model)
         {
             User duplicateUser = db.Users.FirstOrDefault(u => u.EmailAddress.ToLower() == model.EmailAddress.ToLower());
 
             if(duplicateUser == null)
             {
-                model.Status = LoginStatus.Unconfirmed;
                 db.Users.Add(model);
                 db.SaveChanges();
 
