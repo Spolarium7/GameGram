@@ -224,12 +224,85 @@ namespace GameGram.Domain.Infrastructure
                 db.SaveChanges();
                 #endregion
 
-
                 #region Post
                 db.Posts.Add(
                     new Post()
                     {
                         Id = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                        Type = Models.Enums.PostType.Video,
+                        Caption = "25 years of Magic!!!!",
+                        Content = "<iframe src=\"https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMagicTheGathering.apac%2Fvideos%2F1577847202284135%2F&show_text=0&width=560\" width=\"560\" height=\"315\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowTransparency=\"true\" allowFullScreen=\"true\"></iframe>",
+                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693b")
+                    }
+                );
+
+                db.PostComments.Add(new PostComment()
+                {
+                    Id = Guid.Parse("5d102917-6854-4a1a-b418-6c6d172b0e70"),
+                    Content = "Best game ever",
+                    PostId = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                    UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693d")
+                });
+
+                db.PostComments.Add(new PostComment()
+                {
+                    Id = Guid.Parse("5d102917-6854-4a1a-b418-6c6d172b0e71"),
+                    Content = "I feel old now",
+                    PostId = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                    UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693c")
+                });
+
+                db.PostComments.Add(new PostComment()
+                {
+                    Id = Guid.Parse("5d102917-6854-4a1a-b418-6c6d172b0e72"),
+                    Content = "Has it been?",
+                    PostId = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                    UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693a")
+                });
+
+                db.PostHashtags.Add(new PostHashtag()
+                {
+                    Id = Guid.Parse("0f699433-48f4-4b97-86df-39fadaf03b61"),
+                    PostId = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                    Hashtag = "25Years"
+                });
+
+                db.PostHashtags.Add(new PostHashtag()
+                {
+                    Id = Guid.Parse("0f699433-48f4-4b97-86df-39fadaf03b62"),
+                    PostId = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                    Hashtag = "MagicTheGathering"
+                });
+
+                db.PostLikes.Add(new PostLike()
+                {
+                    Id = Guid.Parse("4c46e426-bf72-450d-913d-bbfac52c1eda"),
+                    PostId = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                    UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693a")
+                });
+
+                db.PostLikes.Add(new PostLike()
+                {
+                    Id = Guid.Parse("4c46e426-bf72-450d-913d-bbfac52c1edb"),
+                    PostId = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                    UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693b")
+                });
+
+                db.PostLikes.Add(new PostLike()
+                {
+                    Id = Guid.Parse("4c46e426-bf72-450d-913d-bbfac52c1edc"),
+                    PostId = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c533"),
+                    UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693c")
+                });
+
+                db.SaveChanges();
+                #endregion
+
+                #region Post
+                db.Posts.Add(
+                    new Post()
+                    {
+                        Id = Guid.Parse("bbd9fd73-a322-43e6-acfe-b91e7956c534"),
                         Type = Models.Enums.PostType.Video,
                         Caption = "25 years of Magic!!!!",
                         Content = "<iframe src=\"https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMagicTheGathering.apac%2Fvideos%2F1577847202284135%2F&show_text=0&width=560\" width=\"560\" height=\"315\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowTransparency=\"true\" allowFullScreen=\"true\"></iframe>",

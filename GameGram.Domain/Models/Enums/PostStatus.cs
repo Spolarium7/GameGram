@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameGram.Domain.Models.Enums
 {
-    public enum Gender
+    public enum PublishStatus
     {
-        Male = 1,
-        Female = 0
+        Visible,
+        Hidden
     }
 }

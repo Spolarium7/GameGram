@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameGram.Domain.Models.Enums
+namespace GameGram.Domain.Infrastructure.Enums
 {
-    public enum Gender
+    public enum OperationStatus
     {
-        Male = 1,
-        Female = 0
+        Error = 0,
+        OK = 1
     }
 }

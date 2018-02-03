@@ -49,12 +49,14 @@
   <ItemGroup>
     <Compile Include="BLL\PostBLL.cs" />
     <Compile Include="BLL\UsersBLL.cs" />
-    <Compile Include="CustomModels\CompletePost.cs" />
-    <Compile Include="CustomModels\FlatComment.cs" />
-    <Compile Include="CustomModels\MiniProfile.cs" />
+    <Compile Include="BLL\CustomModels\CompletePost.cs" />
+    <Compile Include="BLL\CustomModels\FlatComment.cs" />
+    <Compile Include="BLL\CustomModels\MiniProfile.cs" />
     <Compile Include="Infrastructure\BaseModel.cs" />
+    <Compile Include="Infrastructure\BLLOperation.cs" />
     <Compile Include="Infrastructure\DataAccess.cs" />
     <Compile Include="Infrastructure\DataInitializer.cs" />
+    <Compile Include="Infrastructure\Enums\OperationStatus.cs" />
     <Compile Include="Infrastructure\Page.cs" />
     <Compile Include="Infrastructure\TimeAgo.cs" />
     <Compile Include="Models\Enums\Gender.cs" />
@@ -72,5 +74,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
