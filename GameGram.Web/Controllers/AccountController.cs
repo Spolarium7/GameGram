@@ -64,8 +64,6 @@ namespace GameGram.Web.Controllers
                 ModelState.AddModelError("", e.Message);
                 return View();
             }
-
-            return View();
         }
 
         private static Random random = new Random();
@@ -74,6 +72,46 @@ namespace GameGram.Web.Controllers
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        [HttpGet, Route("activate")]
+        public ActionResult Activate()
+        {
+            return View();
+        }
+
+        [HttpPost, Route("activate")]
+        public ActionResult Activate(ActivateViewModel model)
+        {
+            try
+            {
+                var op = GameGram.Domain.BLL.UsersBLL.Activate(model.EmailAddress, model.Code);
+
+                if(op.Status == Domain.Infrastructure.Enums.OperationStatus.OK)
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ModelState.AddModelError("", op.Message);
+                    return View();
+                }
+
+            }
+            catch(Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View();
+            }
+        }
+        #endregion
+
+
+        #region LoginByEmail
+        [HttpGet, Route("login")]
+        public ActionResult Login()
+        {
+            return View();
         }
         #endregion
     }

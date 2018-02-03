@@ -23,7 +23,8 @@ namespace GameGram.Domain.BLL
             User duplicateUser = db.Users.FirstOrDefault(u => u.EmailAddress.ToLower() == model.EmailAddress.ToLower());
 
             if(duplicateUser == null)
-            {               
+            {
+                model.Status = LoginStatus.Unconfirmed;
                 db.Users.Add(model);
                 db.SaveChanges();
 
@@ -42,6 +43,34 @@ namespace GameGram.Domain.BLL
                     Message = "Email Address already used."
                 };
             }
+        }
+
+        public static BLLOperation<User> Activate(string emailAddress, string registrationCode)
+        {
+            User user = db.Users.FirstOrDefault(u => u.EmailAddress.ToLower() == emailAddress.ToLower());
+
+            if(user != null)
+            {
+                if(user.RegistrationCode == registrationCode)
+                {
+
+                    user.Status = LoginStatus.Active;
+                    db.SaveChanges();
+
+                    return new BLLOperation<User>()
+                    {
+                        Status = Infrastructure.Enums.OperationStatus.OK,
+                        Message = "Success",
+                        Item = user
+                    };
+                }
+            }
+
+            return new BLLOperation<User>()
+            {
+                Status = Infrastructure.Enums.OperationStatus.Error,
+                Message = "User not found."
+            };
         }
     }
 }
