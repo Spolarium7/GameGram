@@ -143,7 +143,7 @@ namespace GameGram.Web.Controllers
                 request.AddParameter("code", code);
                 request.AddParameter("redirect_uri", "http://localhost:60573/account/get-linkedin-access-token");
                 request.AddParameter("client_id", clientId);
-                request.AddParameter("client_secret", "clientSecret");
+                request.AddParameter("client_secret", clientSecret);
 
                 IRestResponse response = client.Post(request);
                 if(response.StatusCode == System.Net.HttpStatusCode.OK) { 
@@ -187,6 +187,79 @@ namespace GameGram.Web.Controllers
                 
                 return RedirectToAction("Login");
             }
+        #endregion
+
+        #region FaceBookAuthorization
+        [HttpGet, Route("register-by-facebook")]
+        public ActionResult RegisterFacebook()
+        {
+            var randomCode = RandomString(6);
+            System.Web.HttpContext.Current.Session["sessionCode"] = randomCode;
+            var appId = ConfigurationManager.AppSettings["FaceBookAppId"].ToString();
+            return Redirect("https://www.facebook.com/v2.12/dialog/oauth?client_id=" + appId + "&redirect_uri=http://localhost:60573/account/get-facebook-access-token&state=register-" + randomCode + "&scope=public_profile,email");
+        }
+
+        [HttpGet, Route("get-facebook-access-token")]
+        public ActionResult GetFacebookAccessToken(string code, string state)
+        {
+            string accessTokenUrl = "https://graph.facebook.com/v2.12/oauth/access_token";
+            string clientId = ConfigurationManager.AppSettings["FaceBookAppId"].ToString();
+            string clientSecret = ConfigurationManager.AppSettings["FaceBookAppSecret"].ToString();
+
+            var client = new RestClient(accessTokenUrl);
+
+            //Access Token
+            var request = new RestRequest("", Method.POST);
+            request.AddParameter("code", code);
+            request.AddParameter("redirect_uri", "http://localhost:60573/account/get-facebook-access-token");
+            request.AddParameter("client_id", clientId);
+            request.AddParameter("client_secret", clientSecret);
+
+            IRestResponse response = client.Post(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var token = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content);
+
+                //Account Information (Id,FirstName,LastName,EmailAddress //<LinkedIn has no Gender>)
+                client = new RestClient("https://graph.facebook.com/v2.12/me?fields=id,email,first_name,last_name,gender&access_token=" + token["access_token"]);
+                request = new RestRequest("", Method.GET);
+                request.AddHeader("access_token", token["access_token"]);
+
+                response = client.Get(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var facebookUser = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content);
+                    var sessionCode = state.Split('-');
+                    if (sessionCode[1].ToString() == (string)(System.Web.HttpContext.Current.Session["sessionCode"]))
+                    {
+                        if (state.Contains("register"))
+                        {
+                            var op = GameGram.Domain.BLL.UsersBLL.Register(new Domain.Models.User()
+                            {
+                                Id = Guid.NewGuid(),
+                                Status = LoginStatus.Active,
+                                EmailAddress = facebookUser["email"],
+                                FirstName = facebookUser["first_name"],
+                                LastName = facebookUser["last_name"],
+                                Gender = (facebookUser["gender"].ToLower() == "female" ? Gender.Female : Gender.Male),
+                                Password = RandomString(6)
+                            });
+
+                            return RedirectToAction("change-password");
+                        }
+                        else if (state.Contains("login"))
+                        {
+                            //Login with emailAddress from LinkedIn
+                        };
+                    };
+                }
+
+            }
+
+
+
+            return View();
+        }
         #endregion
     }
 }
