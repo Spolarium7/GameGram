@@ -27,15 +27,33 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
+                    @{
+                        if (System.Web.HttpContext.Current.Session["UserName"] != null)
+                        {
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @(System.Web.HttpContext.Current.Session["UserName"].ToString())
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li class="dropdown-item"><a href="#">Account Profile</a></li>
+                                    <li class="dropdown-item"><a href="#">Change Password</a></li>
+                                    <li class="dropdown-item"><div class="dropdown-divider"></div></li>
+                                    <li class="dropdown-item"><a href="~/account/logout">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/account/login-by-email">Login</a>
+                            </li>
+                        }
+                    }
+
                 </ul>
             </div>
         </div>

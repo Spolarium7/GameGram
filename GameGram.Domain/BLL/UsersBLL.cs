@@ -71,5 +71,51 @@ namespace GameGram.Domain.BLL
                 Message = "User not found."
             };
         }
+
+        public static BLLOperation<User> Login(string emailAddress, string password)
+        {
+            User user = db.Users.FirstOrDefault(u => u.EmailAddress.ToLower() == emailAddress.ToLower());
+
+            if(user != null)
+            {
+                if(user.Password == password) {
+                    user.LoginAttempt = 0;
+                    user.Status = LoginStatus.Active;
+                    db.SaveChanges();
+
+                    return new BLLOperation<User>()
+                    {
+                        Status = Infrastructure.Enums.OperationStatus.OK,
+                        Message = "Success",
+                        Item = user
+                    };
+                }
+                else
+                {
+                    user.LoginAttempt = user.LoginAttempt + 1;
+
+                    if(user.LoginAttempt >= 3)
+                    {
+                        user.Status = LoginStatus.Locked;
+                    }
+
+                    db.SaveChanges();
+
+                    return new BLLOperation<User>()
+                    {
+                        Status = Infrastructure.Enums.OperationStatus.Error,
+                        Message = "Login failure.",
+                        Item = null
+                    };
+                }
+            };
+
+            return new BLLOperation<User>()
+            {
+                Status = Infrastructure.Enums.OperationStatus.Error,
+                Message = "Login Failure.",
+                Item = null
+            };
+        }
     }
 }

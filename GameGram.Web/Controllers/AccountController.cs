@@ -1,4 +1,6 @@
-﻿using GameGram.Domain.Models.Enums;
+﻿using GameGram.Domain.Models;
+using GameGram.Domain.Models.Enums;
+using GameGram.Web.Infrastructure;
 using GameGram.Web.ViewModels.Account;
 using Newtonsoft.Json;
 using RestSharp;
@@ -12,7 +14,7 @@ using System.Web.Mvc;
 namespace GameGram.Web.Controllers
 {
     [RoutePrefix("account")]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private static Random random = new Random();
         public static string RandomString(int length)
@@ -110,15 +112,34 @@ namespace GameGram.Web.Controllers
                 }
             }
 
-            [HttpGet, Route("login")]
-            public ActionResult Login()
+            [HttpGet, Route("login-by-email")]
+            public ActionResult LoginEmail()
             {
+                return View();
+            }
+
+            [HttpPost, Route("login-by-email")]
+            public ActionResult LoginEmail(LoginViewModel model)
+            {
+
+                var op = GameGram.Domain.BLL.UsersBLL.Login(model.EmailAddress, model.Password);
+                
+                if(op.Status == Domain.Infrastructure.Enums.OperationStatus.OK)
+                {
+                    SignIn(op.Item);
+                    return RedirectPermanent("~/home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", op.Message);
+                }
+
                 return View();
             }
         #endregion
 
         #region LinkedInAuthorization
-            [HttpGet, Route("register-by-linkedin")]
+        [HttpGet, Route("register-by-linkedin")]
             public ActionResult RegisterLinkedIn()
             {
                 var randomCode = RandomString(6);
@@ -261,5 +282,28 @@ namespace GameGram.Web.Controllers
             return View();
         }
         #endregion
+
+        private void SignIn(User user)
+        {
+            this.WebUser = new WebUser()
+            {
+                Id = user.Id,
+                Name = user.FullName
+            };
+        }
+
+        private void SignOut()
+        {
+            this.WebUser.Id = null;
+            this.WebUser.Name = null;
+            this.WebUser = null;
+        }
+
+        //[HttpGet, Route("logout")]
+        //public ActionResult Logout()
+        //{
+        //    SignOut();
+        //    return View();
+        //}
     }
 }

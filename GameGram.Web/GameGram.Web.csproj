@@ -159,9 +159,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\BaseController.cs" />
+    <Compile Include="Infrastructure\WebUser.cs" />
     <Compile Include="Mailer\MailHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Account\ActivateViewModel.cs" />
+    <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterEmail.cs" />
     <Compile Include="ViewModels\Home\PostsViewModel.cs" />
   </ItemGroup>
@@ -215,11 +218,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\RegisterEmail.cshtml" />
     <Content Include="Views\Account\Activate.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\LoginEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
