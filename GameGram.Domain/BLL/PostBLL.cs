@@ -100,6 +100,8 @@ namespace GameGram.Domain.BLL
 
             IQueryable<Post> postQuery = (IQueryable<Post>)db.Posts;
 
+            postQuery = postQuery.Where(p => p.Status == PostStatus.Active);
+
             if (string.IsNullOrEmpty(keyword) == false)
             {
                 postQuery = postQuery.Where(u => u.Caption.Contains(keyword)
@@ -136,6 +138,65 @@ namespace GameGram.Domain.BLL
             result.QueryCount = queryCount;
 
             return result;
+        }
+
+        public static Guid? Delete(Guid? Id)
+        {
+            Post post = db.Posts.FirstOrDefault(p => p.Id == Id);
+
+            if(post != null)
+            {
+                //Instead of actual deletion, 
+                //we use update to de-activate the post
+                //db.Posts.Remove(post);
+
+                post.Status = PostStatus.Deleted;            
+
+                db.SaveChanges();
+
+                return Id;
+            }
+
+            return null;
+        }
+
+        public static Post Find(Guid? id)
+        {
+           return db.Posts.FirstOrDefault(p => p.Id == id);
+        }
+
+        public static Guid? Create(Post post)
+        {
+            var newPost = new Post()
+            {
+                Id = Guid.NewGuid(),
+                Content = post.Content,
+                Caption = post.Caption,
+                UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693b"),
+                Status = PostStatus.Active
+            };
+
+            db.Posts.Add(newPost);
+            db.SaveChanges();
+
+            return newPost.Id;
+        }
+
+        public static Guid? Update(Post post)
+        {
+            Post oldPost = db.Posts.FirstOrDefault(p => p.Id == post.Id);
+
+            if (oldPost != null)
+            {
+
+                oldPost.Content = post.Content;
+                oldPost.Caption = post.Caption;
+                db.SaveChanges();
+
+                return post.Id;
+            }
+
+            return null;
         }
     }
 }

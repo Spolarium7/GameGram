@@ -19,5 +19,13 @@ namespace GameGram.Domain.Models
         public string Caption { get; set; }
 
         public virtual User User { get; set; }
+
+        public PostStatus Status { get; set; }
+    }
+
+    public enum PostStatus
+    {
+        Active,
+        Deleted
     }
 }

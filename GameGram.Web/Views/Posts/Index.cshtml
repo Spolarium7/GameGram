@@ -1,0 +1,91 @@
+﻿@using GameGram.Domain.CustomModels;
+@model  GameGram.Web.ViewModels.Home.PostsViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<a href="~/posts/add">
+    <button>Create post <i class="fas fa-plus"></i></button>
+</a>
+
+@{
+    if (Model != null)
+    {
+        if (Model.Posts != null)
+        {
+            if (Model.Posts.Items != null)
+            {
+                if (Model.Posts.Items.Count > 0)
+                {
+                    <div class="container">
+                        <h2>Posts</h2>
+                        <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (CompletePost post in Model.Posts.Items)
+                                {
+                                    <tr>
+                                        <td>@post.Title</td>
+                                        <td>
+                                            <a href="~/posts/edit/@post.Id">
+                                                <button><i class="fas fa-pencil-alt"></i></button>
+                                            </a>
+                                            <a href="#" onclick="confirmDelete('@post.Id', '@post.Title')">
+                                                <button><i class="fas fa-trash-alt"></i></button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                }
+            }
+        }
+    }
+}
+
+
+@section Scripts{
+    <script>
+        function confirmDelete(id, title) {
+            $("#delete-post-title").html(title);
+            $("#modal-delete-link").attr("href", "delete/" + id);
+
+            $("#confirmDeleteModal").modal();
+        }
+    </script>
+}
+
+@section Modals{
+    <div id="confirmDeleteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Post</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to delete
+                        <span id="delete-post-title"></span>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a id="modal-delete-link" href=""><button type="button" class="btn btn-danger">Delete</button></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

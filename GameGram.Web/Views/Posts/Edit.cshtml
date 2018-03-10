@@ -1,0 +1,20 @@
+﻿@model GameGram.Web.ViewModels.Posts.UpdatePostViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<form action="/posts/edit" method="post">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <label>Caption</label>
+        @Html.HiddenFor(a => a.Id)
+        @Html.TextBoxFor(a => a.Caption, new { @class = "form-control", placeholder = "Caption" })
+    </div>
+    <div class="form-group">
+        <label>Content</label>
+        @Html.TextAreaFor(a => a.Content, new { @class = "form-control", placeholder = "Content" })
+    </div>
+    <button type="submit" id="submit" name="submit" class="btn btn-primary btn-blue noborder btn-rounded">Update</button>
+</form>
+

@@ -92,7 +92,8 @@ namespace GameGram.Domain.Infrastructure
                         Type = Models.Enums.PostType.Image,
                         Caption = "Combo of the Day",
                         Content = "bbd9fd73-a322-43e6-acfe-b91e7956c531.png",
-                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693a")                    
+                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693a"),
+                        Status = PostStatus.Active
                     }
                 );
 
@@ -173,7 +174,8 @@ namespace GameGram.Domain.Infrastructure
                         Type = Models.Enums.PostType.Text,
                         Caption = "",
                         Content = "IXALAN : Pirates and Dinosaurs!!!",
-                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693e")
+                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693e"),
+                        Status = PostStatus.Active
                     }
                 );
 
@@ -232,7 +234,8 @@ namespace GameGram.Domain.Infrastructure
                         Type = Models.Enums.PostType.Video,
                         Caption = "25 years of Magic!!!!",
                         Content = "<iframe src=\"https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMagicTheGathering.apac%2Fvideos%2F1577847202284135%2F&show_text=0&width=560\" width=\"560\" height=\"315\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowTransparency=\"true\" allowFullScreen=\"true\"></iframe>",
-                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693b")
+                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693b"),
+                        Status = PostStatus.Active
                     }
                 );
 
@@ -306,7 +309,8 @@ namespace GameGram.Domain.Infrastructure
                         Type = Models.Enums.PostType.Video,
                         Caption = "25 years of Magic!!!!",
                         Content = "<iframe src=\"https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMagicTheGathering.apac%2Fvideos%2F1577847202284135%2F&show_text=0&width=560\" width=\"560\" height=\"315\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowTransparency=\"true\" allowFullScreen=\"true\"></iframe>",
-                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693b")
+                        UserId = Guid.Parse("769a988c-f2b7-4095-ac73-e0cc2546693b"),
+                        Status = PostStatus.Active
                     }
                 );
 
